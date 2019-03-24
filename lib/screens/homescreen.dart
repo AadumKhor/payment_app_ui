@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:payments_app_ui/screens/first_panel.dart';
+import 'package:payments_app_ui/transactions.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -55,12 +56,23 @@ class _HomeScreenState extends State<HomeScreen>
 
             // ******************************************
             // the second panel that contains the list of items
-            // ******************************************
+            // // ******************************************
+            // Draggable(
+            //   // onDragStarted: ,
+            //   // onDragCompleted: ,
+            //   // onDragEnd: ,
+            //   child: Container(
+            //     width: double.infinity,
+            //     height: 50.0,
 
+            //   ),
+            //   feedback: ,
+            // )
             PositionedTransition(
               rect: getAniamtionPanel(constraints),
               child: new Material(
-                elevation: 12.0,
+                elevation: 0.0,
+                color: Colors.white,
                 borderRadius: new BorderRadius.only(
                     topLeft: Radius.circular(30.0),
                     topRight: Radius.circular(30.0)),
@@ -84,22 +96,57 @@ class _HomeScreenState extends State<HomeScreen>
                         color: Color(0xFFAEA6C4),
                       )),
                     ),
-                    Expanded(
-                      child: ListView.builder(
-                        itemBuilder: (BuildContext context, int index) {
-                          return Container(
-                            width: double.infinity,
-                            height: 160.0,
-                            child: Icon(Icons.ac_unit),
-                            decoration: BoxDecoration(color: Colors.white),
-                          );
-                        },
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        width: double.infinity,
+                        height: 10.0,
+                        decoration: BoxDecoration(
+                          color: Colors.white
+                        ),
+                        child: Text(
+                         'Recent Transactions',
+                         style: TextStyle(
+                           color: Color(0xFFAEA6C4),
+                           fontSize: 18.0,
+                           fontWeight: FontWeight.w300,
+                           letterSpacing: 2.0
+                         ), 
+                        ),
                       ),
+                    ),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      itemBuilder: _buildListOfTransactions,
+                      itemCount: list.length,
                     )
                   ],
                 ),
               ),
             )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildListOfTransactions(BuildContext context, int index){
+    return Container(
+      height: 100.0,
+      width: double.infinity,
+      child: Card(
+        elevation: 4.0,
+        color: Colors.white,      
+        margin: EdgeInsets.all(10.0),
+        child: Row(
+          children: <Widget>[
+            list[index].icon , 
+            SizedBox(width: 50.0,),
+            Column(children: <Widget>[
+              Text(list[index].name),
+              Divider(color: list[index].color,  height: 3.0,),
+              Text(list[index].location)
+            ],)
           ],
         ),
       ),
